@@ -9,7 +9,7 @@
       booksList: '.books-list',
     },
     addAction: {
-      heart: 'a.book__image',
+      heart: 'a .book__image',
     },
   };
   const classNames = {
@@ -44,24 +44,49 @@
     //referencja do listy
     const favoriteTriggers = document.querySelectorAll(select.addAction.heart);
     console.log('clickTriggers', favoriteTriggers);
-    //for (let favoriteTrigger of favoriteTriggers) {
-    favoriteTriggers.addEventListener('dblclick', function (event) {
-      event.preventDefault();
-      const clickedElement = this;
-      const bookId = clickedElement.getAttribute('data-id');
-      if (arrFavorites.includes(bookId)) {
-        const bookIndex = arrFavorites.indexOf(bookId);
-        if (bookIndex !== -1) {
-          arrFavorites.splice(bookIndex, 1);
-        }
-        clickedElement.classList.remove(classNames.favorite);
-      } else {
-        arrFavorites.push(bookId);
-        clickedElement.classList.toggle(classNames.favorite);
-      }
 
-      console.log('click', arrFavorites);
+    //dodanie listener na liste
+    booksListContainer.addEventListener('dblclick', function (event) {
+      //spawdzenie na co kliknięte, w tym wypadku na rodzica
+      if (event.target.offsetParent.classList.contains('book__image')) {
+        event.preventDefault();
+        //klikniety obrazek emituje event w ty wypadku rodzica
+        const clickedElement = event.target.offsetParent;
+        const bookId = clickedElement.getAttribute('data-id');
+        console.log('dbl');
+        if (arrFavorites.includes(bookId)) {
+          const bookIndex = arrFavorites.indexOf(bookId);
+          if (bookIndex !== -1) {
+            arrFavorites.splice(bookIndex, 1);
+          }
+          clickedElement.classList.remove(classNames.favorite);
+        } else {
+          arrFavorites.push(bookId);
+          clickedElement.classList.toggle(classNames.favorite);
+        }
+
+        console.log('click', arrFavorites);
+      }
     });
+    /*for (let favoriteTrigger of favoriteTriggers) {
+      favoriteTrigger.addEventListener('dblclick', function (event) {
+        event.preventDefault();
+        const clickedElement = this;
+        const bookId = clickedElement.getAttribute('data-id');
+        if (arrFavorites.includes(bookId)) {
+          const bookIndex = arrFavorites.indexOf(bookId);
+          if (bookIndex !== -1) {
+            arrFavorites.splice(bookIndex, 1);
+          }
+          clickedElement.classList.remove(classNames.favorite);
+        } else {
+          arrFavorites.push(bookId);
+          clickedElement.classList.toggle(classNames.favorite);
+        }
+
+        console.log('click', arrFavorites);
+      });
+    }*/
   }
   render();
   initActions();
