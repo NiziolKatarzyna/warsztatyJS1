@@ -10,6 +10,7 @@
     },
     addAction: {
       heart: 'a .book__image',
+      filters: '.filters',
     },
   };
   const classNames = {
@@ -26,7 +27,7 @@
   const booksListContainer = document.querySelector(
     select.containerOf.booksList
   );
-  console.log(booksListContainer);
+  //console.log(booksListContainer);
 
   function render() {
     for (const book of dataSource.books) {
@@ -40,10 +41,14 @@
     }
   }
   let arrFavorites = [];
+  let arrfilters = [];
+  //referencj do filtra
+  const filtersListContainer = document.querySelector(select.addAction.filters);
+  console.log(filtersListContainer);
   function initActions() {
     //referencja do listy
     const favoriteTriggers = document.querySelectorAll(select.addAction.heart);
-    console.log('clickTriggers', favoriteTriggers);
+    //console.log('clickTriggers', favoriteTriggers);
 
     //dodanie listener na liste
     booksListContainer.addEventListener('dblclick', function (event) {
@@ -64,30 +69,39 @@
           arrFavorites.push(bookId);
           clickedElement.classList.toggle(classNames.favorite);
         }
-
         console.log('click', arrFavorites);
       }
     });
-    /*for (let favoriteTrigger of favoriteTriggers) {
-      favoriteTrigger.addEventListener('dblclick', function (event) {
-        event.preventDefault();
-        const clickedElement = this;
-        const bookId = clickedElement.getAttribute('data-id');
-        if (arrFavorites.includes(bookId)) {
-          const bookIndex = arrFavorites.indexOf(bookId);
-          if (bookIndex !== -1) {
-            arrFavorites.splice(bookIndex, 1);
+    filtersListContainer.addEventListener('click', function (event) {
+      //clickedElement = this;
+
+      const filterTagName = event.target.tagName;
+      const filterId = event.target.getAttribute('name');
+      const filterType = event.target.getAttribute('type');
+      const filterValue = event.target.getAttribute('value');
+      if (
+        filterTagName == 'INPUT' &&
+        filterId == 'filter' &&
+        filterType == 'checkbox'
+      ) {
+        console.log('kliknięte', filterValue);
+        if (arrfilters.includes(filterValue)) {
+          const filterIndex = arrfilters.indexOf(filterValue);
+          if (filterIndex !== -1) {
+            arrfilters.splice(filterIndex, 1);
+            event.target.checked = false;
           }
-          clickedElement.classList.remove(classNames.favorite);
         } else {
-          arrFavorites.push(bookId);
-          clickedElement.classList.toggle(classNames.favorite);
+          arrfilters.push(filterValue);
+          event.target.checked = true;
         }
 
-        console.log('click', arrFavorites);
-      });
-    }*/
+        console.log('click', arrfilters);
+      }
+      //event.preventDefault();
+    });
   }
+
   render();
   initActions();
 }
