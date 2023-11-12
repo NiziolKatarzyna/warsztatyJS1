@@ -45,14 +45,6 @@
 
       // Wygenerowany element DOM dołącz jako nowe dziecko DOM do listy .books-list.
       booksListContainer.appendChild(generatedDOM);
-
-      /*const tamplateRatting = document.querySelector(
-        'style="width: {{' +
-          ratingWidth +
-          '}}%; background: {{' +
-          ratingBgc +
-          '}}"'
-      );*/
     }
   }
 
@@ -107,6 +99,7 @@
           if (filterIndex !== -1) {
             arrfilters.splice(filterIndex, 1);
             event.target.checked = false;
+            filterBooks();
           }
         } else {
           arrfilters.push(filterValue);
@@ -125,7 +118,7 @@
       for (const filter of arrfilters) {
         if (!filterBook.details[filter]) {
           shouldBeHidden = true;
-          //break;
+          break;
         }
       }
       const bookHidden = document.querySelector(
