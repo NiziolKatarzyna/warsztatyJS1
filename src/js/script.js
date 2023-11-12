@@ -28,6 +28,9 @@
     constructor() {
       const thisBooksList = this;
 
+      thisBooksList.favoriteBooks = [];
+      thisBooksList.bookFilters = [];
+
       thisBooksList.initData();
       thisBooksList.getElement();
       thisBooksList.render();
@@ -40,8 +43,6 @@
 
     getElement() {
       const thisBooksList = this;
-      thisBooksList.arrFavorites = [];
-      thisBooksList.arrfilters = [];
 
       //reference to list .books-list
       thisBooksList.Container = document.querySelector(
@@ -98,17 +99,17 @@
             const clickedElement = event.target.offsetParent;
             const bookId = clickedElement.getAttribute('data-id');
             console.log('dbl');
-            if (thisBooksList.arrFavorites.includes(bookId)) {
-              const bookIndex = thisBooksList.arrFavorites.indexOf(bookId);
+            if (thisBooksList.favoriteBooks.includes(bookId)) {
+              const bookIndex = thisBooksList.favoriteBooks.indexOf(bookId);
               if (bookIndex !== -1) {
-                thisBooksList.arrFavorites.splice(bookIndex, 1);
+                thisBooksList.favoriteBooks.splice(bookIndex, 1);
               }
               clickedElement.classList.remove(classNames.favorite);
             } else {
-              thisBooksList.arrFavorites.push(bookId);
+              thisBooksList.favoriteBooks.push(bookId);
               clickedElement.classList.toggle(classNames.favorite);
             }
-            console.log('click', thisBooksList.arrFavorites);
+            console.log('click', thisBooksList.favoriteBooks);
           }
         }
       );
@@ -127,20 +128,21 @@
             filterType == 'checkbox'
           ) {
             console.log('kliknięte', filterValue);
-            if (thisBooksList.arrfilters.includes(filterValue)) {
-              const filterIndex = thisBooksList.arrfilters.indexOf(filterValue);
+            if (thisBooksList.bookFilters.includes(filterValue)) {
+              const filterIndex =
+                thisBooksList.bookFilters.indexOf(filterValue);
               if (filterIndex !== -1) {
-                thisBooksList.arrfilters.splice(filterIndex, 1);
+                thisBooksList.bookFilters.splice(filterIndex, 1);
                 event.target.checked = false;
                 thisBooksList.filterBooks();
               }
             } else {
-              thisBooksList.arrfilters.push(filterValue);
+              thisBooksList.bookFilters.push(filterValue);
               event.target.checked = true;
               thisBooksList.filterBooks();
             }
 
-            console.log('click', thisBooksList.arrfilters);
+            console.log('click', thisBooksList.bookFilters);
           }
           //event.preventDefault();
         }
@@ -150,7 +152,7 @@
       const thisBooksList = this;
       for (const filterBook of this.data) {
         let shouldBeHidden = false;
-        for (const filter of thisBooksList.arrfilters) {
+        for (const filter of thisBooksList.bookFilters) {
           if (!filterBook.details[filter]) {
             shouldBeHidden = true;
             break;
