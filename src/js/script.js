@@ -171,7 +171,7 @@
     }
 
     determineRatingBgc(rating) {
-      const thisBooksList = this;
+      //const thisBooksList = this;
       if (rating < 6) {
         return 'linear-gradient(to bottom,  #fefcea 0%, #f1da36 100%)';
       } else if (rating > 6 && rating <= 8) {
@@ -185,10 +185,11 @@
     determineRatingWidth(rating) {
       const thisBooksList = this;
       const width = rating * 10;
-      const limitedWidth = Math.min(Math.max(width, 0), 100);
-      return limitedWidth;
+      thisBooksList.limitedWidth = Math.min(Math.max(width, 0), 100);
+      return thisBooksList.limitedWidth;
     }
   }
 
   const app = new BooksList();
+  console.log(app);
 }

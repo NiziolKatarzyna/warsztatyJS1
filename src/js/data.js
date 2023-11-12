@@ -36,7 +36,7 @@ dataSource.books = [
   },
   {
     id: 4,
-    name: "You don't know JS",
+    name: 'You don\'t know JS',
     image: 'images/books/4.jpg',
     price: 40,
     rating: 8.2,

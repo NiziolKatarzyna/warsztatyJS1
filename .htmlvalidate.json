@@ -4,7 +4,7 @@
     "void-style": [
       "error",
       {
-        "style": "omit"
+        "style": "selfclosing"
       }
     ]
   }
